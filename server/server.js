@@ -1,6 +1,8 @@
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const db = require('./db.js');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -8,13 +10,22 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 const loginRouter = require('./routes/login');
+const createRouter = require('./routes/create');
+const clockinRouter = require('./routes/clockin');
+const clockOutRouter = require('./routes/clockout');
 
 //synchronizing the database and forcing it to false so we dont lose data
 // db.sequelize.sync().then(() => {
 //   console.log('db has been re sync');
 // });
-
+app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use('/', loginRouter);
+app.use('/create', createRouter);
+app.use('/clockin', clockinRouter);
+app.use('/clockout', clockOutRouter);
 
 /**
  *
