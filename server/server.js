@@ -1,6 +1,8 @@
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const db = require('./db.js');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -13,7 +15,10 @@ const loginRouter = require('./routes/login');
 // db.sequelize.sync().then(() => {
 //   console.log('db has been re sync');
 // });
-
+app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use('/', loginRouter);
 
 /**

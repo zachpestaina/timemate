@@ -9,7 +9,8 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const sequelize = new Sequelize(
   // link making connection to databse
-  'postgres://ceysbnlp:8OboVpyfMuX_QI8djNAKa4l2jPempgch@salt.db.elephantsql.com/ceysbnlp'
+  'postgres://ceysbnlp:8OboVpyfMuX_QI8djNAKa4l2jPempgch@salt.db.elephantsql.com/ceysbnlp',
+  { logging: false }
 );
 const db = {};
 
@@ -32,7 +33,7 @@ db.employees = require('./models/employees.model.js')(
   DataTypes,
   types
 );
-const employees = db.types;
+const employees = db.employees;
 
 db.logins = require('./models/logins.model.js')(
   sequelize,
@@ -40,11 +41,18 @@ db.logins = require('./models/logins.model.js')(
   employees
 );
 
-types.findOrCreate({
-  where: { role_id: 1 },
-  defaults: {
-    employee_type: 'manager',
-  },
-});
+sequelize.sync(/* { force: true } */);
+console.log('All models were synchronized successfully.');
+
+// types.findOrCreate({
+//   where: { role_id: 2 },
+//   defaults: {
+//     employee_type: 'worker',
+//   },
+// });
+// employees.destroy({
+//   where: {},
+//   truncate: true,
+// });
 
 module.exports = db;

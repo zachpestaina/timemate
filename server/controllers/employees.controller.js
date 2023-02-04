@@ -5,32 +5,46 @@ const jwt = require('jsonwebtoken');
 const config = require('../secretKey.js');
 // Assigning users to the variable User
 const Employees = db.employees;
+const Logins = db.logins;
 
 //signing a user up
 //hashing users password before its saved to the database with bcrypt
-const signup = async (req, res, next) => {
+const createUser = async (req, res, next) => {
   try {
-    const { userName, email, password, role_id } = req.body;
-    const data = {
-      userName,
-      email,
-      password: await bcrypt.hash(password, 10),
-      role_id,
+    const { first_name, last_name, emp_role, username, password } = req.body;
+    const employeeData = {
+      first_name,
+      last_name,
+      emp_role,
     };
+
     //saving the user
-    const user = await User.create(data);
+    const user = await Employees.create(employeeData);
+    const userId = user.dataValues.emp_id;
+    // const userId = await Employees.findOne({
+    //   where :  =
+
+    const loginData = {
+      username,
+      password: await bcrypt.hash(password, 10),
+      user_id: userId,
+    };
+
+    const userLogin = await Logins.create(loginData);
+
     //if user details is captured
     //generate token with the user's id and the secretKey in the env file
     // set cookie with the token generated
-    if (user) {
-      let token = jwt.sign({ id: user.id }, config.secretKey, {
+    if (userLogin) {
+      let token = jwt.sign({ id: userLogin.login_id }, config.secretKey, {
         expiresIn: 1 * 24 * 60 * 60 * 1000,
       });
 
       res.cookie('jwt', token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
       console.log('the user was succesfully created');
       //send users details
-      return next();
+
+      return;
     } else {
       return res.status(409).send('Details are not correct');
     }
@@ -44,12 +58,18 @@ const signup = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     console.log('you are loggin In');
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     //find a user by their email
-    const user = await User.findOne({
+    const user = await Logins.findOne({
       where: {
-        email: email,
+        username: username,
+      },
+    });
+
+    const userRole = await Employees.findOne({
+      where: {
+        emp_id: user.dataValues.user_id,
       },
     });
 
@@ -70,13 +90,13 @@ const login = async (req, res, next) => {
         res.cookie('jwt', token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
         console.log('You are logged in and the cookie has been created');
         //send user data
-        const userRole = user.role_id;
-        switch (userRole) {
+        const userType = userRole.dataValues.emp_role;
+        switch (userType) {
           case 1:
-            res.status(201).json('manager');
+            res.status(201).json('YOU ARE A MANAGER');
             return;
           case 2:
-            res.status(201).json('employee');
+            res.status(201).json('You are a workerr your life sucks');
             return;
           default:
             return res
@@ -106,7 +126,7 @@ const login = async (req, res, next) => {
 // const update = async (req, res, next)
 
 module.exports = {
-  signup,
+  createUser,
   login,
   //  update
 };

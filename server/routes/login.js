@@ -1,15 +1,15 @@
 const express = require('express');
 const userAuth = require('../middleware/userAuth');
-const employeeController = require('../controller/employees.controller');
-const { login, create, delete, clock, clockout } = employeeController;
+const employeeController = require('../controllers/employees.controller');
+const { login, createUser } = employeeController;
 const router = express.Router();
 
 // router.post('/', (req, res) => {
 //     res.status(200).json()
 // });
 router.post('/login', login);
-router.post('/create', login);
-router.post('/ClockIN ', login);
+router.post('/create', userAuth.emailCheck, createUser);
+router.post('/ClockIN', login);
 
 module.exports = router;
 
