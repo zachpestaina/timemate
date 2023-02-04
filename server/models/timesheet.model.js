@@ -10,23 +10,28 @@ module.exports = (sequelize, DataTypes, employees) => {
         allowNull: false,
       },
       clock_in: {
-        type: DataTypes.DATETIME,
-        defaultValue: DataTypes.NOW,
+        type: DataTypes.DATE,
       },
       clock_out: {
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
       },
-      emp_role: {
+      week: {
+        type: DataTypes.INTEGER,
+      },
+      day: {
+        type: DataTypes.INTEGER,
+      },
+      emp_id: {
         type: DataTypes.INTEGER,
         references: {
           // This is a reference to another model
-          model: types,
+          model: employees,
           // This is the column name of the referenced model
-          key: 'role_id',
+          key: 'emp_id',
         },
       },
     },
     { timestamps: true }
   );
-  return Employees;
+  return Timesheet;
 };

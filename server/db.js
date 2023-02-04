@@ -41,6 +41,12 @@ db.logins = require('./models/logins.model.js')(
   employees
 );
 
+db.timesheet = require('./models/timesheet.model.js')(
+  sequelize,
+  DataTypes,
+  employees
+);
+
 sequelize.sync(/* { force: true } */);
 console.log('All models were synchronized successfully.');
 
