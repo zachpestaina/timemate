@@ -10,27 +10,26 @@ class App extends Component {
         password: '',
         isLoggedIn: false,
     }
-    this.update = this.update.bind(this);
+    this.checkCredentials = this.checkCredentials.bind(this);
   }
 
   render() {
-    // return (
-    //     <LoginPage updater = {this.update} />
-    // )
     if (this.state.isLoggedIn) {
         return (
             <EmployeePage />
         )
     } else {
         return (
-            <LoginPage updater = {this.update} />
+            <LoginPage authorize = {this.checkCredentials} />
         )
     }
   }
 
-  update(event) {
+  checkCredentials() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    // make request to database right here
+    // update state with whether or not credentals were correct, name of user, and role
     this.setState({username, password, isLoggedIn: true});
     console.log(username, password);
   }

@@ -4,7 +4,7 @@ import UserInput from './UserInput.jsx';
 class LoginPage extends Component {
     render() {
         return (
-                <UserInput updater = {this.props.updater}/>
+                <UserInput authorize = {this.props.authorize}/>
         )
     }
 }

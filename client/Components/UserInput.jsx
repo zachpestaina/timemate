@@ -7,7 +7,7 @@ class UserInput extends Component {
             <section>
                 <input id='username' type='text' htmlFor='username' placeholder='username'></input>
                 <input id='password' type='password' htmlFor='password' placeholder='password'></input>
-                <LoginButton updater = {this.props.updater}/>
+                <LoginButton authorize = {this.props.authorize}/>
             </section>
         )
     }
