@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import UserInput from './UserInput.jsx';
 
 class LoginPage extends Component {
     render() {
         return (
-            <div>hi</div>
+                <UserInput updater = {this.props.updater}/>
         )
     }
 }
