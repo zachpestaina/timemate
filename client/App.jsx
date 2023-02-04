@@ -41,7 +41,7 @@ const App = () => {
       {authenticated ? (
         <RoleBased role={'role'} />
       ) : (
-        <LoginPage />
+        <LoginPage onLogin={handleLogin} />
         // onLogin={handleLogin}
       )}
     </div>
