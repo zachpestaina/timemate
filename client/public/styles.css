@@ -9,6 +9,10 @@ body {
   border: solid;
 } */
 
+#clockProof {
+  display: none;
+}
+
 #loginPageBox {
   display: flex;
   justify-content: center;
