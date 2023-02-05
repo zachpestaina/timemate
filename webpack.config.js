@@ -31,4 +31,10 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    proxy: {
+      '/login' : 'http://localhost:8080/',
+    }
+  }
 };

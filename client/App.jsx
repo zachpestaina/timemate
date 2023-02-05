@@ -71,6 +71,27 @@ class App extends Component {
     this.checkCredentials = this.checkCredentials.bind(this);
   }
 
+  componentDidMount() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    fetch('http://localhost:8080/logins', {
+      method: 'POST',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({username:'workermcgee', password:'worker'}),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log('data', data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     if (this.state.isLoggedIn) {
       return <EmployeePage />;
@@ -88,24 +109,26 @@ class App extends Component {
   //   console.log(username, password);
   // }
   checkCredentials() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    // const username = document.getElementById('username').value;
+    // const password = document.getElementById('password').value;
 
-    fetch('http://localhost:8080/login', {
-      method: 'POST',
-      header: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    })
-      .then((response) => {
-        response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // fetch('http://localhost:8080/logins', {
+    //   method: 'POST',
+    //   header: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({username, password}),
+    // })
+    //   .then((response) => {
+    //     response.clone().json();
+    //   })
+    //   .then((data) => {
+    //     console.log('data', data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    console.log('hi');
   }
+
 
   //   async checkCredentials() {
   //     try {

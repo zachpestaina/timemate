@@ -3,13 +3,33 @@ const cors = require('cors');
 const path = require('path');
 const db = require('./db.js');
 const cookieParser = require('cookie-parser');
+const http = require('http');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 //setting up your port
 const PORT = process.env.PORT || 8080;
 
-const loginRouter = require('./routes/login');
+function changeHeaders(req,res,next) {
+  if (req.headers['Content-Type'] === 'text/plain;charset=UTF-8') {
+    req.headers['Content-Type'] = 'application/json; charset=utf-8';
+  }
+  return next();
+}
+
+// app.use(express.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+app.post('/logins', (req, res) => {
+  console.log('in server file', req.body);
+  const { username, password } = req.body;
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+  res.status(200).json({good: 'ok'});
+})
+
+const loginRouter = require('./routes/login.js');
 const createRouter = require('./routes/create');
 const clockinRouter = require('./routes/clockin');
 const clockOutRouter = require('./routes/clockout');
@@ -27,6 +47,7 @@ app.use('/create', createRouter);
 app.use('/clockin', clockinRouter);
 app.use('/clockout', clockOutRouter);
 // app.use('/emphours', empHoursRouter);
+
 
 /**
  *
