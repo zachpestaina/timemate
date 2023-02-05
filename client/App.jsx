@@ -87,36 +87,57 @@ class App extends Component {
   //   this.setState({ username, password, isLoggedIn: true });
   //   console.log(username, password);
   // }
+  checkCredentials() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-  async checkCredentials() {
-    try {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      console.log('i am logging in');
-      console.log('username', username);
-      console.log('password', password);
-      const body = {
-        username,
-        password,
-      };
-      const response = await fetch('http://localhost:8080/login', {
-        method: 'POST',
-        header: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+    fetch('http://localhost:8080/login', {
+      method: 'POST',
+      header: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    })
+      .then((response) => {
+        response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      const json = await response.json();
-      if (response.ok) {
-        console.log('i am an ok response', json);
-        setRole(json);
-        setAuthenticated(true);
-      } else {
-        console.log('Wrong Credentials Sucka');
-        setLoginFailed(true);
-      }
-    } catch (err) {
-      console.log('that was an error while loggin in', err);
-    }
   }
+
+  //   async checkCredentials() {
+  //     try {
+  //       const username = document.getElementById('username').value;
+  //       const password = document.getElementById('password').value;
+  //       // console.log('i am logging in');
+  //       console.log('username', username);
+  //       console.log('password', password);
+  //       const body = {
+  //         username,
+  //         password,
+  //       };
+  //       console.log('this is the request', body);
+  //       const response = await fetch('http://localhost:8080/login', {
+  //         method: 'POST',
+  //         header: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify(body),
+  //       });
+  //       const json = await response.json();
+  //       if (response.ok) {
+  //         console.log('i am an ok response', json);
+  //         setRole(json);
+  //         setAuthenticated(true);
+  //       } else {
+  //         console.log('Wrong Credentials Sucka');
+  //         setLoginFailed(true);
+  //       }
+  //     } catch (err) {
+  //       console.log('that was an error while loggin in', err);
+  //     }
+  //   }
+  // }
 }
 
 export default App;

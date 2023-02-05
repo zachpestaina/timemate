@@ -20,13 +20,13 @@ const clockOutRouter = require('./routes/clockout');
 // });
 app.use(express.json());
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/', loginRouter);
 app.use('/create', createRouter);
 app.use('/clockin', clockinRouter);
 app.use('/clockout', clockOutRouter);
-app.use('/emphours', empHoursRouter);
+// app.use('/emphours', empHoursRouter);
 
 /**
  *

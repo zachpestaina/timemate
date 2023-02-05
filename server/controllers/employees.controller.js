@@ -58,8 +58,8 @@ const createUser = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     console.log('you are loggin In');
-    console.log('you are trying to log in with ths credentials:');
     const { username, password } = req.body;
+    console.log('req.body: ', req.body);
     console.log('username', username);
     console.log('password', password);
 
