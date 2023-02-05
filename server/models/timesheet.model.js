@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes, employees) => {
       clock_out: {
         type: DataTypes.DATE,
       },
+      hours: {
+        type: DataTypes.INTEGER,
+      },
       week: {
         type: DataTypes.INTEGER,
       },
