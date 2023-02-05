@@ -26,6 +26,7 @@ app.use('/', loginRouter);
 app.use('/create', createRouter);
 app.use('/clockin', clockinRouter);
 app.use('/clockout', clockOutRouter);
+app.use('/emphours', empHoursRouter);
 
 /**
  *

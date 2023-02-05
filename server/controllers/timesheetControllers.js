@@ -4,7 +4,7 @@ const Employees = db.employees;
 const Timesheet = db.timesheet;
 
 const clockIn = async (req, res, next) => {
-  const { emp_id, clock_in, week, day } = req.body;
+  const { emp_id } = req.body;
 
   const clockInData = {
     emp_id,
@@ -55,7 +55,9 @@ const clockOut = async (req, res, next) => {
     if (!entry) {
       throw new Error();
     }
-    res.locals.entry = entry.dataValues;
+
+    console.log(entry);
+    res.locals.entry = entry;
 
     return next();
   } catch (err) {
