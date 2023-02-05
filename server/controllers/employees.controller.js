@@ -96,10 +96,10 @@ const login = async (req, res, next) => {
         const userType = userRole.dataValues.emp_role;
         switch (userType) {
           case 1:
-            res.status(201).json('Success: Manager');
+            res.status(201).json({Success: 'Manager'});
             return;
           case 2:
-            res.status(201).json('Success: Worker');
+            res.status(201).json({Success: 'Worker'});
             return;
           default:
             return res
