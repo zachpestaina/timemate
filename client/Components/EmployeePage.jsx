@@ -14,7 +14,7 @@ class EmployeePage extends Component {
     this.state = {
       currentTime: '',
       currentAction: '',
-      error: '',
+      message: '',
     };
     this.toggleClockIn = this.toggleClockIn.bind(this);
     this.getTime = this.getTime.bind(this);
@@ -27,7 +27,8 @@ class EmployeePage extends Component {
         <section id='welcomeMessage'>Hello, Insert Employee Name Here</section>
         <section id='hoursWorked'>You've worked ___ hours this week</section>
         <section id='clockProofContainer'>
-          <section id='clockProof'>You {this.state.currentAction} at {this.state.currentTime}</section>
+          {/* <section id='clockProof'>You {this.state.currentAction} at {this.state.currentTime}</section> */}
+          <section id='clockProof'>{this.state.message}</section>
         </section>
         <section id='timeButtonParent'>
           <ClockIn toggleClockIn={this.toggleClockIn} />
@@ -42,24 +43,26 @@ class EmployeePage extends Component {
   toggleClockIn(e) {
     console.log('target', e.target.id);
     let action;
-    let error;
+    let message;
+    const time = this.getTime();
     if (e.target.id === 'clockInButton') {
-      if (this.state.currentAction !== 'clocked in') {
-        action = 'clocked in';
+      if(this.state.currentAction === 'clocked in') {
+        message = 'You already clocked in!';
       } else {
-        error = 'you already clocked in';
+        action = 'clocked in';
+        message = `You clocked in at ${time}`;
       }
     } else {
-      if (this.state.currentAction !== 'clocked out') {
-        action = 'clocked out';
+      if (this.state.currentAction === 'clocked out') {
+        message = 'You already clocked out';
       } else {
-        error = 'you already clocked out';
+        action = 'clocked out';
+        message = `You clocked out at ${time}`;
       }
     }
-    const time = this.getTime();
     this.revealClockProof('block');
     setTimeout(this.revealClockProof, 2000);
-    this.setState({ currentTime: time, currentAction: action, error });
+    this.setState({ currentTime: time, currentAction: action, message });
   }
 
   getTime() {
