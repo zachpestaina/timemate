@@ -26,8 +26,8 @@ class EmployeePage extends Component {
       <section id='employeePageBox'>
         <section id='welcomeMessage'>Hello, Insert Employee Name Here</section>
         <section id='hoursWorked'>You've worked ___ hours this week</section>
-        <section id='clockProof'>
-          You {this.state.currentAction} at {this.state.currentTime}
+        <section id='clockProofContainer'>
+          <section id='clockProof'>You {this.state.currentAction} at {this.state.currentTime}</section>
         </section>
         <section id='timeButtonParent'>
           <ClockIn toggleClockIn={this.toggleClockIn} />
@@ -37,7 +37,7 @@ class EmployeePage extends Component {
     );
   }
   // on component did mount, query the database to get hours worked that week
-  componentDidMount() {}
+  // componentDidMount() {}
 
   toggleClockIn(e) {
     console.log('target', e.target.id);
@@ -57,8 +57,9 @@ class EmployeePage extends Component {
       }
     }
     const time = this.getTime();
-    this.setState({ currentTime: time, currentAction: action, error });
     this.revealClockProof('block');
+    setTimeout(this.revealClockProof, 2000);
+    this.setState({ currentTime: time, currentAction: action, error });
   }
 
   getTime() {
@@ -72,10 +73,9 @@ class EmployeePage extends Component {
     return time;
   }
 
-  revealClockProof(display) {
+  revealClockProof(display = 'none') {
     const clockProof = document.getElementById('clockProof');
     clockProof.style.display = display;
-    setTimeout(revealClockProof('none'), 1000);
     return;
   }
 }

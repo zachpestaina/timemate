@@ -9,8 +9,15 @@ body {
   border: solid;
 } */
 
+#clockProofContainer {
+  height: 1.5em;
+  width: 300px;
+  text-align: center;
+}
+
 #clockProof {
   display: none;
+  color: coral;
 }
 
 #loginPageBox {
@@ -108,7 +115,7 @@ input {
 #clockInButton {
   text-align: center;
   border-radius: 5px;
-  margin-top: 5px;
+  /* margin-top: 5px; */
   width: 500px;
   height: 100px;
   color: rgb(137, 122, 104);

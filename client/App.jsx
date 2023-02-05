@@ -64,16 +64,19 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      // username: '',
+      // password: '',
       isLoggedIn: false,
+      role: '',
     };
     this.checkCredentials = this.checkCredentials.bind(this);
   }
 
   render() {
-    if (this.state.isLoggedIn) {
+    if (this.state.isLoggedIn && this.state.role === 'worker') {
       return <EmployeePage />;
+    } else if (this.state.isLoggedIn && this.state.role === 'manager') {
+      return <ManagerPage />;
     } else {
       return <LoginPage authorize={this.checkCredentials} />;
     }
@@ -93,14 +96,18 @@ class App extends Component {
 
     fetch('http://localhost:8080/login', {
       method: 'POST',
-      header: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     })
       .then((response) => {
-        response.json();
+        return response.json();
       })
       .then((data) => {
-        console.log(data);
+        if (data.Success === 'Worker') {
+          this.setState({isLoggedIn: true, role: 'worker'});
+        } else {
+          this.setState({isLoggedIn: true, role: 'manager'});
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -121,7 +128,7 @@ class App extends Component {
   //       console.log('this is the request', body);
   //       const response = await fetch('http://localhost:8080/login', {
   //         method: 'POST',
-  //         header: { 'Content-Type': 'application/json' },
+  //         headers: { 'Content-Type': 'application/json' },
   //         body: JSON.stringify(body),
   //       });
   //       const json = await response.json();
@@ -137,7 +144,6 @@ class App extends Component {
   //       console.log('that was an error while loggin in', err);
   //     }
   //   }
-  // }
-}
+  }
 
 export default App;
