@@ -36,6 +36,8 @@ class EmployeePage extends Component {
       </section>
     );
   }
+  // on component did mount, query the database to get hours worked that week
+  componentDidMount() {}
 
   toggleClockIn(e) {
     console.log('target', e.target.id);
@@ -77,7 +79,5 @@ class EmployeePage extends Component {
     return;
   }
 }
-
-// on component did mount, query the database to get hours worked that week
 
 export default EmployeePage;

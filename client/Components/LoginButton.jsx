@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 
 class LoginButton extends Component {
   render() {
-    return <button id='loginButton'>Login</button>;
+    return (
+      <button onClick={this.props.authorize} id='loginButton'>
+        Login
+      </button>
+    );
   }
 }
 
