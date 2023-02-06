@@ -57,64 +57,55 @@ const createUser = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    console.log('you are loggin In');
+    // grab username & pw from request body
     const { username, password } = req.body;
-    console.log('req.body: ', req.body);
-    console.log('username', username);
-    console.log('password', password);
 
-    //find a user by their email
+    // query db with username
     const user = await Logins.findOne({
       where: {
         username: username,
       },
     });
 
+    // if no matching username in db return 401
+    if (user === null) {
+      console.log('incorrect username');
+      return res.sendStatus(401);
+    }
+
+    // once valid username has been found grab emp associated with login
     const userRole = await Employees.findOne({
       where: {
         emp_id: user.dataValues.user_id,
       },
     });
 
-    //if user email is found, compare password with bcrypt
-    if (user) {
-      const isSame = await bcrypt.compare(password, user.password);
+    //compare with hashed pw in db
+    const isSame = await bcrypt.compare(password, user.password);
 
-      //if password is the same
-      //generate token with the user's id and the secretKey in the env file
+    // if hash pw does not match return 401
+    if (!isSame) {
+      console.log('incorrect password');
+      return res.sendStatus(401);
+    }
 
-      if (isSame) {
-        let token = jwt.sign({ id: user.id }, config.secretKey, {
-          expiresIn: 1 * 24 * 60 * 60 * 1000,
-        });
+    // create token using jwt
+    let token = jwt.sign({ id: user.id }, config.secretKey, {
+      expiresIn: 1 * 24 * 60 * 60 * 1000,
+    });
 
-        //if password matches wit the one in the database
-        //go ahead and generate a cookie for the user
-        res.cookie('jwt', token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
-        console.log('You are logged in and the cookie has been created');
-        //send user data
-        const userType = userRole.dataValues.emp_role;
-        switch (userType) {
-          case 1:
-            res.status(201).json({Success: 'Manager'});
-            return;
-          case 2:
-            res.status(201).json({Success: 'Worker'});
-            return;
-          default:
-            return res
-              .status(401)
-              .send(
-                'Your user does not have a role!. Communicate with your admin'
-              );
-        }
-      } else {
-        console.log('Failed Login Attempt');
-        return res.status(401).json(err);
-      }
+    // attach jwt token to res cookie
+    res.cookie('jwt', token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
+
+    // grab employee role from authorized user
+    const userType = userRole.dataValues.emp_role;
+
+    // user trying to login is a manager
+    if (userType === 1) {
+      res.status(201).json({ Success: 'Manager' });
     } else {
-      console.log('Failed Login Attempt');
-      return res.status(401).json(err);
+      // user must be an employee
+      res.status(201).json({ Success: 'Worker' });
     }
   } catch (e) {
     return next({
@@ -126,10 +117,7 @@ const login = async (req, res, next) => {
   }
 };
 
-// const update = async (req, res, next)
-
 module.exports = {
   createUser,
   login,
-  //  update
 };
