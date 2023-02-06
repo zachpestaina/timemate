@@ -24,7 +24,7 @@ class EmployeePage extends Component {
   render() {
     return (
       <section id='employeePageBox'>
-        <section id='welcomeMessage'>Hello, Insert Employee Name Here</section>
+        <section id='welcomeMessage'>Hello, {this.props.firstName}</section>
         <section id='hoursWorked'>You've worked ___ hours this week</section>
         <section id='clockProofContainer'>
           {/* <section id='clockProof'>You {this.state.currentAction} at {this.state.currentTime}</section> */}
@@ -46,7 +46,7 @@ class EmployeePage extends Component {
     let message;
     const time = this.getTime();
     if (e.target.id === 'clockInButton') {
-      if(this.state.currentAction === 'clocked in') {
+      if (this.state.currentAction === 'clocked in') {
         message = 'You already clocked in!';
       } else {
         action = 'clocked in';
@@ -81,6 +81,8 @@ class EmployeePage extends Component {
     clockProof.style.display = display;
     return;
   }
+
+  //fetch request with employee id and new date()
 }
 
 export default EmployeePage;

@@ -68,13 +68,20 @@ class App extends Component {
       // password: '',
       isLoggedIn: false,
       role: '',
+      emp_id: '',
+      first_name: '',
     };
     this.checkCredentials = this.checkCredentials.bind(this);
   }
 
   render() {
     if (this.state.isLoggedIn && this.state.role === 'worker') {
-      return <EmployeePage />;
+      return (
+        <EmployeePage
+          firstName={this.state.first_name}
+          empId={this.state.emp_id}
+        />
+      );
     } else if (this.state.isLoggedIn && this.state.role === 'manager') {
       return <ManagerPage />;
     } else {
@@ -104,9 +111,25 @@ class App extends Component {
       })
       .then((data) => {
         if (data.Success === 'Worker') {
-          this.setState({isLoggedIn: true, role: 'worker'});
-        } else {
-          this.setState({isLoggedIn: true, role: 'manager'});
+          let emp_id = data.emp_id;
+          let first_name = data.first_name;
+          this.setState({
+            isLoggedIn: true,
+            role: 'worker',
+            emp_id,
+            first_name,
+          });
+        } else if (data.Success === 'Manager') {
+          let emp_id = data.emp_id;
+          let first_name = data.first_name;
+          this.setState({
+            isLoggedIn: true,
+            role: 'manager',
+            emp_id,
+            first_name,
+          });
+        } else if (data.error) {
+          alert('your username/password is incorrect');
         }
       })
       .catch((error) => {
@@ -144,6 +167,6 @@ class App extends Component {
   //       console.log('that was an error while loggin in', err);
   //     }
   //   }
-  }
+}
 
 export default App;

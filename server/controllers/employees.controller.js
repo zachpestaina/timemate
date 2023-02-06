@@ -70,7 +70,7 @@ const login = async (req, res, next) => {
     // if no matching username in db return 401
     if (user === null) {
       console.log('incorrect username');
-      return res.sendStatus(401);
+      return res.status(401).send({ error: 'Wrong login credentials' });
     }
 
     // once valid username has been found grab emp associated with login
@@ -79,6 +79,7 @@ const login = async (req, res, next) => {
         emp_id: user.dataValues.user_id,
       },
     });
+    console.log(userRole.dataValues);
 
     //compare with hashed pw in db
     const isSame = await bcrypt.compare(password, user.password);
@@ -86,7 +87,7 @@ const login = async (req, res, next) => {
     // if hash pw does not match return 401
     if (!isSame) {
       console.log('incorrect password');
-      return res.sendStatus(401);
+      return res.status(401).send({ error: 'Wrong login credentials' });
     }
 
     // create token using jwt
@@ -102,10 +103,18 @@ const login = async (req, res, next) => {
 
     // user trying to login is a manager
     if (userType === 1) {
-      res.status(201).json({ Success: 'Manager' });
+      res.status(201).json({
+        Success: 'Manager',
+        emp_id: userRole.dataValues.emp_id,
+        first_name: userRole.dataValues.first_name,
+      });
     } else {
       // user must be an employee
-      res.status(201).json({ Success: 'Worker' });
+      res.status(201).json({
+        Success: 'Worker',
+        emp_id: userRole.dataValues.emp_id,
+        first_name: userRole.dataValues.first_name,
+      });
     }
   } catch (e) {
     return next({
