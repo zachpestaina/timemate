@@ -13,6 +13,8 @@ const loginRouter = require('./routes/login');
 const createRouter = require('./routes/create');
 const clockinRouter = require('./routes/clockin');
 const clockOutRouter = require('./routes/clockout');
+const empHoursRouter = require('./routes/empHours');
+const allEmployeeRouter = require('./routes/allemployees');
 
 //synchronizing the database and forcing it to false so we dont lose data
 // db.sequelize.sync().then(() => {
@@ -27,6 +29,7 @@ app.use('/create', createRouter);
 app.use('/clockin', clockinRouter);
 app.use('/clockout', clockOutRouter);
 // app.use('/emphours', empHoursRouter);
+// app.use('/allemps', allEmployeeRouter);
 
 /**
  *

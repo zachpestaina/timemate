@@ -1,25 +1,46 @@
 const db = require('../db');
 
 const getDate = (req, res, next) => {
-  if (req.body.currentDate) {
-    const { currentDate, emp_id } = req.body;
+  const { date, emp_id, time } = req.body;
 
-    // if currentDate is an object, comment out below line
-    // currentDate.toString();
+  // const test = new Date(date);
 
-    const currentTime = currentDate.split(' ')[4];
+  // if currentDate is an object, comment out below line
+  // currentDate.toString();
 
-    const dateStr = currentDate.split(' ').slice(1, 4).join('-');
+  // const currentTime = date.split(' ')[4];
 
-    res.locals.time = currentTime;
-    res.locals.date = dateStr;
+  const dateStr = date.split('T')[0];
 
-    res.locals.week = currentDate.getWeek();
+  const dateArr = dateStr.split('-');
 
-    return next();
-  } else {
-    return next({ err: 'Bad Date in getDate' });
-  }
+  console.log(dateArr);
+
+  const numDate = new Date(
+    Number(dateArr[0]),
+    Number(dateArr[1]) - 1,
+    Number(dateArr[2])
+  );
+
+  // console.log(currentTime);
+
+  const weekNumber = numDate.getWeek();
+
+  res.locals.timestamp = date;
+  res.locals.emp_id = emp_id;
+  res.locals.week = weekNumber;
+
+  // console.log('weekNumber', weekNumber);
+
+  // res.locals.time = time;
+
+  // res.locals.emp_id = emp_id;
+
+  // res.locals.week = date.getWeek();
+
+  // console.log(res.locals.week);
+
+  return next();
 };
 
 //
