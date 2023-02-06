@@ -6,7 +6,7 @@ class EmployeeRow extends Component {
       <div id='rowContainer'>
         <div id='nameContainer'></div>
         <div id='hoursContainer'></div>
-        <button id='delete'>DELETE</button>
+        <div id='employeeIdContainer'></div>
       </div>
     );
   }
