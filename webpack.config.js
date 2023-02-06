@@ -10,7 +10,7 @@ module.exports = {
   mode: process.env.NODE_ENV,
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'client', 'public', 'index.html'),
+      template: path.resolve(__dirname, 'client', 'index.html'),
     }),
   ],
   module: {
