@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import LoginPage from './Components/LoginPage.jsx';
 import EmployeePage from './Components/EmployeePage.jsx';
 import './public/styles.css';
+import ManagerPage from './Components/ManagerPage.jsx';
 
 // const App = () => {
 //   // this.checkCredentials = this.checkCredentials.bind(this);
