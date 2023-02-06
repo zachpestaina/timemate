@@ -2,7 +2,7 @@ const db = require('../db');
 
 const getDate = (req, res, next) => {
   if (req.body.currentDate) {
-    const { currentDate } = req.body;
+    const { currentDate, emp_id } = req.body;
 
     // if currentDate is an object, comment out below line
     // currentDate.toString();
