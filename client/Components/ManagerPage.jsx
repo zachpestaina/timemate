@@ -11,17 +11,17 @@ class ManagerPage extends Component {
     return (
       <section id='managerPageOutterBox'>
         <div>TimeMate</div>
-        <table id='employeeTable'>
-          <tr>
+        {/* <table id='employeeTable'> */}
+        {/* <tr>
             <th id='employeeNameTable'>Employee</th>
             <th id='hoursWorkedTable'>Hours Worked</th>
             <th id='employeeIdTable'>Employee ID</th>
-          </tr>
+          </tr> */}
 
-          {/* we want to fill this table with rows from our database, containing
+        {/* we want to fill this table with rows from our database, containing
           the information of the employees */}
-          <EmployeeRow />
-        </table>
+        <EmployeeRow />
+        {/* </table> */}
         <deleteButton />
       </section>
     );

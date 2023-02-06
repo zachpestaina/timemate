@@ -1,4 +1,5 @@
 //user model
+
 module.exports = (sequelize, DataTypes, types) => {
   const Employees = sequelize.define(
     'all_employees',
