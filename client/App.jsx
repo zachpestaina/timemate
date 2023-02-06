@@ -4,75 +4,17 @@ import EmployeePage from './Components/EmployeePage.jsx';
 import './public/styles.css';
 import ManagerPage from './Components/ManagerPage.jsx';
 
-// const App = () => {
-//   // this.checkCredentials = this.checkCredentials.bind(this);
-//   const [authenticated, setAuthenticated] = useState(false);
-//   const [role, setRole] = useState('');
-//   const [loginFailed, setLoginFailed] = useState(false);
-
-//   const handleLogin = async ({ username, password }) => {
-//     console.log('i am logging in');
-//     try {
-//       const body = {
-//         username,
-//         password,
-//       };
-//       const response = await fetch('http://localhost:8080/login', {
-//         method: 'POST',
-//         header: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(body),
-//       });
-//       const json = await response.json();
-//       if (response.ok) {
-//         console.log('i am an ok response', json);
-//         setRole(json);
-//         setAuthenticated(true);
-//       } else {
-//         console.log('Wrong Credentials');
-//         setLoginFailed(true);
-//       }
-//     } catch (err) {
-//       console.log('that was an error while loggin in', err);
-//     }
-//   };
-
-//   return (
-//     <Fragment>
-//       {loginFailed && (
-//         <div className='alert alert-danger'>WRONG CREDENTIALS</div>
-//       )}
-//       <div>
-//         {authenticated ? (
-//           <RoleBased role={'role'} />
-//         ) : (
-//           // <h1>I AM HERE</h1>
-//           // onLogin={handleLogin}
-//           <LoginPage onLogin={handleLogin} />
-//           // onLogin={handleLogin}
-//         )}
-//       </div>
-//     </Fragment>
-//   );
-//   // const username = document.getElementById('username').value;
-//   // const password = document.getElementById('password').value;
-//   // // make request to database right here
-//   // // update state with whether or not credentals were correct, name of user, and role
-//   // this.setState({ username, password, isLoggedIn: true });
-//   // console.log(username, password);
-// };
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // username: '',
-      // password: '',
       isLoggedIn: false,
       role: '',
       emp_id: '',
       first_name: '',
     };
     this.checkCredentials = this.checkCredentials.bind(this);
+    this.logOut = this.logOut.bind(this);
   }
 
   render() {
@@ -81,23 +23,17 @@ class App extends Component {
         <EmployeePage
           firstName={this.state.first_name}
           empId={this.state.emp_id}
+          logOut={this.logOut}
+          totalHours={this.state.totalHours}
         />
       );
     } else if (this.state.isLoggedIn && this.state.role === 'manager') {
-      return <ManagerPage />;
+      return <ManagerPage logOut={this.logOut}/>;
     } else {
       return <LoginPage authorize={this.checkCredentials} />;
     }
   }
 
-  // checkCredentials() {
-  //   const username = document.getElementById('username').value;
-  //   const password = document.getElementById('password').value;
-  //   // make request to database right here
-  //   // update state with whether or not credentals were correct, name of user, and role
-  //   this.setState({ username, password, isLoggedIn: true });
-  //   console.log(username, password);
-  // }
   checkCredentials() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -138,36 +74,11 @@ class App extends Component {
       });
   }
 
-  //   async checkCredentials() {
-  //     try {
-  //       const username = document.getElementById('username').value;
-  //       const password = document.getElementById('password').value;
-  //       // console.log('i am logging in');
-  //       console.log('username', username);
-  //       console.log('password', password);
-  //       const body = {
-  //         username,
-  //         password,
-  //       };
-  //       console.log('this is the request', body);
-  //       const response = await fetch('http://localhost:8080/login', {
-  //         method: 'POST',
-  //         headers: { 'Content-Type': 'application/json' },
-  //         body: JSON.stringify(body),
-  //       });
-  //       const json = await response.json();
-  //       if (response.ok) {
-  //         console.log('i am an ok response', json);
-  //         setRole(json);
-  //         setAuthenticated(true);
-  //       } else {
-  //         console.log('Wrong Credentials Sucka');
-  //         setLoginFailed(true);
-  //       }
-  //     } catch (err) {
-  //       console.log('that was an error while loggin in', err);
-  //     }
-  //   }
+  logOut() {
+    console.log('in log out')
+    this.setState({isLoggedIn: false});
+  }
+
 }
 
 export default App;

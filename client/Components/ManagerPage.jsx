@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EmployeeRow from './EmployeeRow.jsx';
 import deleteButton from './deleteButton.jsx';
+import LogOutButton from './logOutButton.jsx';
 
 class ManagerPage extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class ManagerPage extends Component {
   render() {
     return (
       <section id='managerPageOutterBox'>
-        <div>TimeMate</div>
+        <div id='managerTimeMate'>TimeMate</div>
         {/* <table id='employeeTable'> */}
         {/* <tr>
             <th id='employeeNameTable'>Employee</th>
@@ -22,7 +23,10 @@ class ManagerPage extends Component {
           the information of the employees */}
         <EmployeeRow />
         {/* </table> */}
-        <deleteButton />
+        {/* <deleteButton /> */}
+        <section id='managerLogOut'>
+          <LogOutButton logOut={this.props.logOut}/>
+        </section>
       </section>
     );
   }

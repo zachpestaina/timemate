@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ClockIn from './ClockIn.jsx';
 import ClockOut from './ClockOut.jsx';
+import LogOutButton from './logOutButton.jsx';
 
 class EmployeePage extends Component {
   constructor(props) {
@@ -15,8 +16,8 @@ class EmployeePage extends Component {
       currentTime: '',
       currentAction: '',
       message: '',
-      totalHours: '',
       entry_id: '',
+      totalHours: '',
     };
     this.toggleClockIn = this.toggleClockIn.bind(this);
     this.getTime = this.getTime.bind(this);
@@ -29,7 +30,7 @@ class EmployeePage extends Component {
       <section id='employeePageBox'>
         <section id='welcomeMessage'>Hello, {this.props.firstName}</section>
         <section id='hoursWorked'>
-          You've worked {this.props.totalHours} hours this week
+          You've worked {this.state.totalHours} hours this week
         </section>
         <section id='clockProofContainer'>
           {/* <section id='clockProof'>You {this.state.currentAction} at {this.state.currentTime}</section> */}
@@ -39,6 +40,9 @@ class EmployeePage extends Component {
           <ClockIn toggleClockIn={this.toggleClockIn} />
           <ClockOut toggleClockIn={this.toggleClockIn} />
         </section>
+        <section>
+          <LogOutButton logOut={this.props.logOut}/>
+        </section>
       </section>
     );
   }
@@ -47,6 +51,26 @@ class EmployeePage extends Component {
   // componentDidMount() {}
   //clockin
   //clockout
+    //display current hours
+    componentDidMount() {
+      console.log('emp id', this.props.empId);
+      fetch('http://localhost:8080/currentemphours', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({emp_id: this.props.empId}),
+      })
+      .then((response) => {
+        console.log('response', response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log('data', data);
+        this.setState({totalHours: data.total});
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
 
   //display current hours
   // componentDidMount() {
@@ -141,8 +165,6 @@ class EmployeePage extends Component {
         body: JSON.stringify({
           time: time,
           date: date,
-
-          // emp_id: this.props.empId,
           entry_id: this.state.entry_id,
         }),
       })

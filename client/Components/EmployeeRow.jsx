@@ -17,13 +17,14 @@ const EmployeeRow = () => {
         return response.json();
       })
       .then((data) => {
-        setEmployees(data);
+        console.log('data', data)
+        setEmployees(data[0]);
       })
       .catch((error) => {
         console.log('There is an error in the EmployeeRow get request ', error);
       });
   }, []);
-  console.log(employees);
+  console.log(employees[0]);
   return (
     <div className='justify-self-center'>
       <table className='table table-borderd text-center justify-self-centered'>
@@ -41,7 +42,7 @@ const EmployeeRow = () => {
                 {employee.first_name} {employee.last_name}
               </td>
               <td> {employee.emp_id}</td>
-              <td>100</td>
+              <td>{employee.hours_worked}</td>
             </tr>
           ))}
         </tbody>

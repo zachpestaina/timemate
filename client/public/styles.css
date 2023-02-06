@@ -1,13 +1,6 @@
 body {
   background-color: blanchedalmond;
 }
-/* #outterLoginPageBox {
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-  height: 500px;
-  border: solid;
-} */
 
 #clockProofContainer {
   height: 1.5em;
@@ -23,21 +16,16 @@ body {
 #loginPageBox {
   display: flex;
   justify-content: center;
-  align-items: center;
-  /* height: 100%; */
-  /* height: 500px; */
 }
+
 #outterLoginBox {
   display: block;
   height: 600px;
   width: 500px;
-  /* border: solid; */
   position: absolute;
   top: 15%;
-  /* justify-content: center; */
-  /* align-items: center; */
-  /* flex-direction: column; */
 }
+
 #loginBox {
   position: relative;
   top: 50%;
@@ -54,27 +42,20 @@ body {
   width: 400px;
   height: 400px;
 }
+
 #timemate {
   color: coral;
-  /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
   font-size: 50px;
   font-family: 'Cabin', sans-serif;
   font-weight: bolder;
   text-align: center;
   position: relative;
   top: 10%;
-  /* left: 33%; */
-  /* float: inline-end; */
   max-height: 100px;
-  /* margin-top: auto; */
-  /* margin-bottom: auto; */
-  /* align-items: center; */
-  /* justify-content: center; */
   background-color: transparent;
-  /* border: solid; */
-  /* margin-top: 10%; */
   z-index: 2;
 }
+
 input {
   margin: 5px;
   border-radius: 5px;
@@ -97,6 +78,27 @@ input {
   background-color: rgb(254, 241, 226);
 }
 
+#logOutButton {
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 5px;
+  width: 200px;
+  height: 50px;
+  margin-top: 100px;
+  color: rgb(137, 122, 104);
+  border: none;
+  background-color: rgb(253, 215, 158);
+  font-family: 'Cabin', sans-serif;
+  font-size: 25px;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 2px 2px 8px rgb(233, 198, 145);
+}
+
+#logOutButton:hover {
+  background-color: rgb(254, 241, 226);
+  box-shadow: 2px 2px 8px rgb(254, 241, 226);
+}
+
 #welcomeMessage {
   text-align: center;
   font-size: 3em;
@@ -115,15 +117,12 @@ input {
 #clockInButton {
   text-align: center;
   border-radius: 5px;
-  /* margin-top: 5px; */
   width: 500px;
   height: 100px;
   color: rgb(137, 122, 104);
   border: none;
   font-family: 'Cabin', sans-serif;
   font-size: 25px;
-
-  /* background-color: bisque; */
   background-color: rgb(253, 215, 158);
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 50px;
@@ -139,7 +138,6 @@ input {
   color: rgb(137, 122, 104);
   border: none;
   background-color: rgb(253, 215, 158);
-  /* background-color: bisque; */
   font-family: 'Cabin', sans-serif;
   font-size: 25px;
   font-family: Arial, Helvetica, sans-serif;
@@ -169,4 +167,15 @@ input {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+#managerLogOut {
+  text-align: center;
+}
+
+#managerTimeMate {
+  color: coral;
+  text-align: center;
+  font-size: 50px;
+  font-family: 'Cabin', sans-serif;
 }
