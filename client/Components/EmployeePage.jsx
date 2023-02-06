@@ -15,17 +15,22 @@ class EmployeePage extends Component {
       currentTime: '',
       currentAction: '',
       message: '',
+      totalHours: '',
+      entry_id: '',
     };
     this.toggleClockIn = this.toggleClockIn.bind(this);
     this.getTime = this.getTime.bind(this);
     this.revealClockProof = this.revealClockProof.bind(this);
+    this.clockInOut = this.clockInOut.bind(this);
   }
 
   render() {
     return (
       <section id='employeePageBox'>
         <section id='welcomeMessage'>Hello, {this.props.firstName}</section>
-        <section id='hoursWorked'>You've worked ___ hours this week</section>
+        <section id='hoursWorked'>
+          You've worked {this.props.totalHours} hours this week
+        </section>
         <section id='clockProofContainer'>
           {/* <section id='clockProof'>You {this.state.currentAction} at {this.state.currentTime}</section> */}
           <section id='clockProof'>{this.state.message}</section>
@@ -38,18 +43,37 @@ class EmployeePage extends Component {
     );
   }
   // on component did mount, query the database to get hours worked that week
+  //fetch request with employee id and new date()
   // componentDidMount() {}
+  //clockin
+  //clockout
+
+  //display current hours
+  // componentDidMount() {
+  //   fetch('http://localhost:8080/emphours')
+  //   .then((response) => {
+  //     return response.json();
+  //   })
+  //   .then((data) => {
+  //     this.setState({totalHours: data});
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   })
+  // }
 
   toggleClockIn(e) {
     console.log('target', e.target.id);
     let action;
     let message;
-    const time = this.getTime();
+    const { time, date } = this.getTime();
     if (e.target.id === 'clockInButton') {
       if (this.state.currentAction === 'clocked in') {
         message = 'You already clocked in!';
       } else {
         action = 'clocked in';
+        //send post request
+        this.clockInOut(time, date, action);
         message = `You clocked in at ${time}`;
       }
     } else {
@@ -57,6 +81,8 @@ class EmployeePage extends Component {
         message = 'You already clocked out';
       } else {
         action = 'clocked out';
+        //send post request
+        this.clockInOut(time, date, action);
         message = `You clocked out at ${time}`;
       }
     }
@@ -73,7 +99,7 @@ class EmployeePage extends Component {
     const minutes =
       date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
     const time = `${hours}:${minutes}:${seconds}`;
-    return time;
+    return { time, date };
   }
 
   revealClockProof(display = 'none') {
@@ -82,7 +108,55 @@ class EmployeePage extends Component {
     return;
   }
 
-  //fetch request with employee id and new date()
+  clockInOut(time, date, action) {
+    // August 19, 1975 23:15:30
+    // { time: '11:31:06', date: '2023-02-06T16:31:06.474Z', emp_id: 9 }
+    console.log(action);
+    if (action === 'clocked in') {
+      console.log('sending fetch request');
+      fetch('http://localhost:8080/clockin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          time: time,
+          date: date,
+          emp_id: this.props.empId,
+        }),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          // console.log('data', data);
+          this.setState({ entry_id: data });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (action === 'clocked out') {
+      console.log('entry_id', this.state.entry_id);
+      fetch('http://localhost:8080/clockout', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          time: time,
+          date: date,
+
+          // emp_id: this.props.empId,
+          entry_id: this.state.entry_id,
+        }),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
 }
 
 export default EmployeePage;
