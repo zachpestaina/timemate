@@ -5,7 +5,6 @@ const getDate = require('../middleware/getDate.js');
 const router = express.Router();
 
 // when a post request is sent to /clockin,
-// router.post('/clockin', );
 
 router.post(
   '/',

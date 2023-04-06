@@ -6,10 +6,11 @@
 //  */
 
 const { Sequelize, DataTypes } = require('sequelize');
+require('dotenv').config();
 
 const sequelize = new Sequelize(
   // link making connection to databse
-  'postgres://ceysbnlp:8OboVpyfMuX_QI8djNAKa4l2jPempgch@salt.db.elephantsql.com/ceysbnlp',
+  process.env.postgres,
   { logging: false }
 );
 const db = {};
@@ -23,7 +24,7 @@ sequelize
     console.log('Connection has been established successfully.');
   })
   .catch((err) => {
-    console.log('i did not connect');
+    console.log('Connection failed');
   });
 
 db.types = require('./models/types.model.js')(sequelize, DataTypes);
@@ -48,30 +49,5 @@ db.timesheet = require('./models/timesheet.model.js')(
   employees
 );
 const timesheet = db.timesheet;
-
-// timesheet.create({
-//   clock_in:"2023-02-04T10:54:42.303Z",
-//   clock_out:"2023-02-04T19:54:42.303Z",
-//   hours:7,
-//   week:1,
-//   emp_id:9
-// })
-
-
-// employees.hasMany(logins);
-// logins.belongsTo(employees);
-sequelize.sync(/* { force: true } */);
-console.log('All models were synchronized successfully.');
-
-// types.findOrCreate({
-//   where: { role_id: 2 },
-//   defaults: {
-//     employee_type: 'worker',
-//   },
-// });
-// employees.destroy({
-//   where: {},
-//   truncate: true,
-// });
 
 module.exports = db;

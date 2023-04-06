@@ -15,15 +15,11 @@ const clockinRouter = require('./routes/clockin');
 const clockOutRouter = require('./routes/clockout');
 const empHoursRouter = require('./routes/empHours');
 const allEmployeeRouter = require('./routes/allemployees');
-const getCurrentHours = require('./controllers/currentEmpHoursController.js')
+const getCurrentHours = require('./controllers/currentEmpHoursController.js');
 
-//synchronizing the database and forcing it to false so we dont lose data
-// db.sequelize.sync().then(() => {
-//   console.log('db has been re sync');
-// });
 app.use(express.json());
 app.use(cors());
-// app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use('/create', createRouter);
 app.use('/', loginRouter);
@@ -33,8 +29,8 @@ app.use('/emphours', empHoursRouter);
 
 app.post('/currentemphours', getCurrentHours, (req, res) => {
   console.log(res.locals.totals);
-  res.status(200).json(res.locals.totals)
-})
+  res.status(200).json(res.locals.totals);
+});
 
 /**
  *
