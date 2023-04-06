@@ -1,9 +1,3 @@
 # TimeMate
 
-++++++For Demo/testing++++++
--------Employee------
-username: workermcgee
-password: worker
-------Manager---------
-username: LamesBoe
-password: admin
+Node.js application allowing employers to efficiently manage and monitor their employees' timesheets.
