@@ -1,5 +1,12 @@
 # TimeMate
 
-<hr/>
+Conveniently update and oversee your timesheet records, streamlining the time-tracking process for both employers and employees.
 
-Node.js application allowing employers to efficiently manage and monitor their employees' timesheets.
+# Technologies used in the project
+
+<ul>
+  <li> Node.js </li>
+  <li> Express.js </li>
+  <li> Sequelize </li>
+  <li> React.js </li>
+</ul>
