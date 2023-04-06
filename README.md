@@ -2,7 +2,7 @@
 
 Conveniently update and oversee your timesheet records, streamlining the time-tracking process for both employers and employees.
 
-# Technologies used in the project
+<h3> Technologies used in the project </h3>
 
 <ul>
   <li> Node.js </li>
